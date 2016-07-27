@@ -74,7 +74,6 @@ object B64TMainForm: TB64TMainForm
     TabOrder = 0
     object ResultTextTabSheet: TTabSheet
       Caption = 'Result Data'
-      ExplicitHeight = 267
       DesignSize = (
         729
         245)
@@ -102,7 +101,6 @@ object B64TMainForm: TB64TMainForm
         TabOrder = 0
         Visible = False
         WordWrap = False
-        ExplicitHeight = 192
       end
       object ResultSaveButton: TButton
         Left = 11
@@ -113,7 +111,6 @@ object B64TMainForm: TB64TMainForm
         Caption = 'Save to file...'
         TabOrder = 1
         OnClick = ResultSaveButtonClick
-        ExplicitTop = 230
       end
       object ResultTextRadioButton: TRadioButton
         Left = 93
@@ -169,13 +166,11 @@ object B64TMainForm: TB64TMainForm
         FontGutter.Name = 'Courier New'
         FontGutter.Style = []
         Mode = vbmodeHex
-        ExplicitHeight = 192
       end
     end
     object ResultFileTabSheet: TTabSheet
       Caption = 'Result File'
       ImageIndex = 1
-      ExplicitHeight = 267
       DesignSize = (
         729
         245)
@@ -333,6 +328,17 @@ object B64TMainForm: TB64TMainForm
         FontGutter.Name = 'Courier New'
         FontGutter.Style = []
         Mode = vbmodeHex
+      end
+      object SourceMIMEFormatButton: TButton
+        Left = 632
+        Top = 199
+        Width = 81
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'MIME Format'
+        TabOrder = 6
+        Visible = False
+        OnClick = SourceMIMEFormatButtonClick
       end
     end
     object SourceFileTabSheet: TTabSheet

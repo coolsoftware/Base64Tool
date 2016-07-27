@@ -67,6 +67,7 @@ type
     LinkLabel: TLabel;
     Label3: TLabel;
     CopyrightLabel: TLabel;
+    SourceMIMEFormatButton: TButton;
     procedure CloseButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -85,6 +86,7 @@ type
     procedure ResultSaveButtonClick(Sender: TObject);
     procedure LinkLabelClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SourceMIMEFormatButtonClick(Sender: TObject);
   private
     { Private declarations }
     FSourceStream: TStringStream;
@@ -94,6 +96,7 @@ type
     procedure SaveSettings;
     procedure ExploreToFile(const sFileName: String);
     procedure EncodeDecode(bDecode: Boolean);
+    function MIMEFormat(const sText: String): String;
   public
     { Public declarations }
   end;
@@ -283,6 +286,36 @@ begin
   end;
 end;
 
+function TB64TMainForm.MIMEFormat(const sText: String): String;
+var
+  lstIn, lstOut: TStringList;
+  I, K, L: Integer;
+  S: String;
+begin
+  lstIn := TStringList.Create;
+  lstOut := TStringList.Create;
+  try
+    lstIn.Text := sText;
+    for I := 0 to lstIn.Count-1 do
+    begin
+      S := Trim(lstIn[I]);
+      L := Length(S);
+      if L = 0 then Continue;
+      K := 1;
+      while K+76 <= L do
+      begin
+        lstOut.Add(Copy(S, K, 76));
+        Inc(K, 76);
+      end;
+      lstOut.Add(Copy(S, K, L-K+1));
+    end;
+    Result := lstOut.Text;
+  finally
+    lstOut.Free;
+    lstIn.Free;
+  end;
+end;
+
 procedure TB64TMainForm.ResultBrowseButtonClick(Sender: TObject);
 begin
   ResultSaveDialog.FileName := ResultFileEdit.Text;
@@ -369,6 +402,7 @@ begin
     FSourceStream.WriteString(SourceMemo.Text);
     SourceMemo.Visible := False;
   end;
+  SourceMIMEFormatButton.Visible := False;
   if not SourceBinHex.Visible then
     SourceBinHex.Visible := True;
   SourceBinHex.Reload;
@@ -385,6 +419,11 @@ begin
       if SourceBinHex.Visible then SourceBinHex.Reload;
     end;
   end;
+end;
+
+procedure TB64TMainForm.SourceMIMEFormatButtonClick(Sender: TObject);
+begin
+  SourceMemo.Text := MIMEFormat(SourceMemo.Text);
 end;
 
 procedure TB64TMainForm.SourceSaveButtonClick(Sender: TObject);
@@ -406,6 +445,7 @@ begin
     SourceMemo.Text := FSourceStream.DataString;
     SourceMemo.Visible := True;
   end;
+  SourceMIMEFormatButton.Visible := True;
 end;
 
 end.
