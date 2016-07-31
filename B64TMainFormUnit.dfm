@@ -291,6 +291,7 @@ object B64TMainForm: TB64TMainForm
         TabOrder = 5
         Visible = False
         WordWrap = False
+        OnKeyPress = SourceMemoKeyPress
       end
       object SourceBinHex: TATBinHex
         Left = 11

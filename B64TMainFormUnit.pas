@@ -87,6 +87,7 @@ type
     procedure LinkLabelClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure SourceMIMEFormatButtonClick(Sender: TObject);
+    procedure SourceMemoKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     FSourceStream: TStringStream;
@@ -418,6 +419,15 @@ begin
       FSourceStream.LoadFromFile(SourceOpenDialog.FileName);
       if SourceBinHex.Visible then SourceBinHex.Reload;
     end;
+  end;
+end;
+
+procedure TB64TMainForm.SourceMemoKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = ^A then
+  begin
+    (Sender as TMemo).SelectAll;
+    Key := #0;
   end;
 end;
 
